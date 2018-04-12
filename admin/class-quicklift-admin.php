@@ -126,10 +126,11 @@ class QuickLift_Admin {
 
       //Remove existing entity
       $existing_uuid = get_post_meta($post_ID, 'lift_uuid', true);
+      $preview_image = get_the_post_thumbnail_url($post_ID, 'thumbnail');
 
       $created = new DateTime($post->post_date_gmt);
       $modified = new DateTime($post->post_modified_gmt);
-      $entities = $quickLift->quickLiftCreateEntities($existing_uuid, $post_ID, 'wp_blog', $post->post_title, $created->format(DateTime::ATOM), $modified->format(DateTime::ATOM), $preview_image = '', $post->post_content);
+      $entities = $quickLift->quickLiftCreateEntities($existing_uuid, $post_ID, 'wp_blog', $post->post_title, $created->format(DateTime::ATOM), $modified->format(DateTime::ATOM), $preview_image, $post->post_content);
 
       if ($existing_uuid != '') {
         $quickLift->quickLiftUpdateEntities($entities);

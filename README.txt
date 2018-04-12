@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Quicklift ===
 Contributors: kaynenh
 Tags: acquia_lift
 Requires at least: 4.7

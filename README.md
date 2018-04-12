@@ -12,7 +12,10 @@ Lift Personalization for Wordpress.
 
 ## Description
 
-INITIAL RELEASE. USE AT YOUR OWN RISK. Based on work by John Money in [Acquia Lift CSV](https://github.com/johnmoney/acquia-lift-csv) and uses the [Content Hub SDK](https://github.com/acquia/content-hub-php).Does not support syndication. Creates a simple personalization custom post type to create content and adds necessary lift.js install script to the site.
+**Use with caution.**  
+*This was built as a proof of concept so bugs surely exist.*
+
+Based on work by John Money in [Acquia Lift CSV](https://github.com/johnmoney/acquia-lift-csv) and uses the [Content Hub SDK](https://github.com/acquia/content-hub-php).Does not support syndication. Creates a simple personalization custom post type to create content and adds necessary lift.js install script to the site.
 
 ## Installation
 

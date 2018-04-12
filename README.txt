@@ -23,9 +23,19 @@ Lift Personalization for Wordpress. Does not support syndication. Creates a simp
 
 == Frequently Asked Questions ==
 
-= Will there be FAQs? =
+= How do I use this? =
 
-Maybe someday
+1. Add a new personalization custom post type
+2. Go to the front-end of the website
+3. Activate Lift
+4. Use personalization in Experience Builder
+
+= What's next =
+
+1. Create personalizations in custom html widgets
+2. Create slots through a custom widget
+3. Automatic site id creation in settings form
+4. Preview images
 
 == Screenshots ==
 

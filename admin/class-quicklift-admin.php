@@ -4,7 +4,7 @@
  * The admin-specific functionality of the plugin.
  *
  * @link       http://example.com
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    QuickLift
  * @subpackage QuickLift/admin
@@ -25,7 +25,7 @@ class QuickLift_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 * @var      string    $quicklift    The ID of this plugin.
 	 */
@@ -34,7 +34,7 @@ class QuickLift_Admin {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
@@ -43,7 +43,7 @@ class QuickLift_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 * @param      string    $quicklift       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
@@ -57,7 +57,7 @@ class QuickLift_Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function enqueue_styles() {
 
@@ -80,7 +80,7 @@ class QuickLift_Admin {
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public function enqueue_scripts() {
 
@@ -103,7 +103,7 @@ class QuickLift_Admin {
   /**
    * Register the admin hooks
    *
-   * @since    1.0.0
+   * @since    0.1.0
    */
   public function quicklift_admin() {
       add_action( 'admin_init', array($this, 'quicklift_settings_init') );
@@ -115,7 +115,7 @@ class QuickLift_Admin {
   /**
    * Register the post publish hook
    *
-   * @since    1.0.0
+   * @since    0.1.0
    */
   public function quicklift_post_publish($post_ID, $post) {
 
@@ -207,7 +207,7 @@ class QuickLift_Admin {
   /**
    * Return the options page
    *
-   * @since    1.0.0
+   * @since    0.1.0
    */
   public function lift_options_page() {
 
@@ -243,7 +243,7 @@ class QuickLift_Admin {
   /**
    * Return the status page
    *
-   * @since    1.0.0
+   * @since    0.1.0
    */
   public function lift_status_page() {
 

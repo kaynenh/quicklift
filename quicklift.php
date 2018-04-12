@@ -11,14 +11,14 @@ require 'vendor/autoload.php';
  * that starts the plugin.
  *
  * @link              http://example.com
- * @since             1.0.0
+ * @since             0.1.0
  * @package           QuickLift
  *
  * @wordpress-plugin
  * Plugin Name:       QuickLift
  * Plugin URI:        https://docs.acquia.com/
  * Description:       Acquia Lift Personalization for Wordpress. Does Not Support Syndication.
- * Version:           1.0.0
+ * Version:           0.1.0
  * Author:            Kaynen Heikkinen
  * Author URI:        http://acquia.com/
  * License:           GPL-2.0+
@@ -34,10 +34,10 @@ if ( ! defined( 'WPINC' ) ) {
 
 /**
  * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Start at version 0.1.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'QUICKLIFT', '1.0.0' );
+define( 'QUICKLIFT', '0.1.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -73,7 +73,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-quicklift.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    0.1.0
  */
 function run_quicklift() {
 

@@ -5,7 +5,7 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    QuickLift
  * @subpackage QuickLift/includes
  * @author     Your Name <email@example.com>
@@ -17,7 +17,7 @@ class QuickLift_Activator {
 	 *
 	 * Long Description.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1.0
 	 */
 	public static function activate() {
 

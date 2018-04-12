@@ -1,0 +1,12 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+.quicklift-wrap .form-table th {
+    width: 150px;
+}
+
+.quicklift-wrap input[type=text] {
+    width: 500px;
+}

@@ -1,0 +1,33 @@
+{
+  "name": "kaynenh/simple_lift_wp",
+  "type": "project",
+  "description": "Wordpress plugin to get up and running with Lift in Wordpress",
+  "homepage": "https://github.com/kaynenh",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Kaynen Heikkinen",
+      "email": "kaynen.heikkinen@acquia.com"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/kaynenh"
+  },
+  "require": {
+    "cweagans/composer-patches": "~1.0",
+    "acquia/content-hub-php": "1.2.1",
+    "hassankhan/config": "^0.11.2",
+    "symfony/yaml": "^3.1",
+    "ramsey/uuid": "^3.7"
+  },
+  "config": {
+    "preferred-install": "source"
+  },
+  "extra": {
+    "patches": {
+      "acquia/content-hub-php": {
+        "Enable synchronous entity creation": "https://patch-diff.githubusercontent.com/raw/acquia/content-hub-php/pull/36.patch"
+      }
+    }
+  }
+}

@@ -37,13 +37,6 @@ Lift Personalization for Wordpress. Does not support syndication. Creates a simp
 3. Automatic site id creation in settings form
 4. Preview images
 
-== Screenshots ==
-
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-
 == Changelog ==
 
 = 1.0 =

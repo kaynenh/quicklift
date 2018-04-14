@@ -40,6 +40,8 @@ class QuickLift_Admin {
 	 */
 	private $version;
 
+	private $included_types;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -51,6 +53,7 @@ class QuickLift_Admin {
 
 		$this->quicklift = $quicklift;
 		$this->version = $version;
+		$this->included_types = array("post", "page", "personalization");
 
 	}
 
@@ -112,6 +115,17 @@ class QuickLift_Admin {
 
   }
 
+  public function personalization_description( $views ){
+
+    $screen = get_current_screen();
+    $post_type = get_post_type_object($screen->post_type);
+
+    if ($post_type->description) {
+      printf('<h4>%s</h4>', esc_html($post_type->description)); // echo
+    }
+
+    return $views; // return original input unchanged
+  }
   /**
    * Register the post publish hook
    *
@@ -121,7 +135,7 @@ class QuickLift_Admin {
 
     $quickLift = new QuickLift_CH_Manager();
 
-    if ($post->post_type != 'post') {
+    if (in_array($post->post_type, $this->included_types)) {
       if ($quickLift->connected == true) {
         $existing_uuid = get_post_meta($post_ID, 'lift_uuid', true);
         $preview_image = get_the_post_thumbnail_url($post_ID, 'thumbnail');
@@ -129,7 +143,7 @@ class QuickLift_Admin {
 
         $created = new DateTime($post->post_date_gmt);
         $modified = new DateTime($post->post_modified_gmt);
-        $entity = $quickLift->quickLiftCreateEntity($existing_uuid, $post_ID, 'wp_blog', $post->post_title, $created->format(DateTime::ATOM), $modified->format(DateTime::ATOM), $preview_image, $post->post_content);
+        $entity = $quickLift->quickLiftCreateEntity($existing_uuid, $post_ID, $post->post_type, $post->post_title, $created->format(DateTime::ATOM), $modified->format(DateTime::ATOM), $preview_image, $post->post_content);
 
         if ($existing_uuid != '') {
           $quickLift->quickLiftUpdateEntities($quickLift->entities);
@@ -343,7 +357,7 @@ class QuickLift_Admin {
 
     $args = array(
       'labels'             => $labels,
-      'description'        => __( 'Personalizations to use with Acquia Lift.', 'quicklift-textdomain' ),
+      'description'        => __( 'Personalizations to use with Acquia Lift. Supports Full HTML only.', 'quicklift-textdomain' ),
       'public'             => true,
       'publicly_queryable' => true,
       'show_ui'            => true,
@@ -359,6 +373,18 @@ class QuickLift_Admin {
     );
 
     register_post_type( 'personalization', $args );
+  }
+
+  function quicklift_widgets_init() {
+    register_sidebar( array(
+      'name' => __( 'Lift Only', 'quicklift' ),
+      'id' => 'quicklift-1',
+      'description' => __( 'Widgets in this area will only be added to Experience Builder.', 'quicklift' ),
+      'before_widget' => '',
+      'after_widget'  => '',
+      'before_title'  => '',
+      'after_title'   => '',
+    ) );
   }
 
 }

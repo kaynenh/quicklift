@@ -158,15 +158,21 @@ class QuickLift {
 	 */
 	private function define_admin_hooks() {
 
+	  $types = array("post","page","personalization");
 		$plugin_admin = new QuickLift_Admin( $this->get_quicklift(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'quicklift_admin' );
     $this->loader->add_action( 'init', $plugin_admin, 'quicklift_content_init' );
-    $this->loader->add_action( 'publish_personalization', $plugin_admin, 'quicklift_post_publish',10,2 );
+    //$this->loader->add_action( 'widgets_init', $plugin_admin, 'quicklift_widgets_init' );
+    $this->loader->add_filter("views_edit-personalization",$plugin_admin, 'personalization_description');
+    foreach($types as $type) {
+      $this->loader->add_action('publish_'.$type, $plugin_admin, 'quicklift_post_publish', 10, 2);
+    }
     $this->loader->add_action( 'publish_post', $plugin_admin, 'quicklift_post_publish',10,2 );
     $this->loader->add_action( 'wp_trash_post', $plugin_admin, 'quicklift_post_delete',10,2 );
+
 
 	}
 

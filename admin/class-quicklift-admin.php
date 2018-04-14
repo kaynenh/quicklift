@@ -107,8 +107,8 @@ class QuickLift_Admin {
    */
   public function quicklift_admin() {
       add_action( 'admin_init', array($this, 'quicklift_settings_init') );
-      add_options_page( 'QuickLift Settings', 'QuickLift', 'manage_options', 'quicklift/quicklift-admin.php', array($this, 'lift_options_page'));
-      add_options_page( 'QuickLift Status', 'QuickLift Status', 'manage_options', 'quicklift/quicklift-status.php', array($this, 'lift_status_page'));
+      add_options_page( 'QuickLift Settings', 'QuickLift', 'manage_options', 'quicklift-admin.php', array($this, 'lift_options_page'));
+      add_options_page( 'QuickLift Status', 'QuickLift Status', 'manage_options', 'quicklift-status.php', array($this, 'lift_status_page'));
 
   }
 
@@ -137,6 +137,29 @@ class QuickLift_Admin {
           $quickLift->quickLiftSaveEntities($quickLift->entities);
         }
       }
+    }
+
+    $this->exportWidget($quickLift);
+  }
+
+  /**
+   * Register the post delete hook
+   *
+   * @since    0.1.0
+   */
+  public function quicklift_post_delete($post_ID) {
+
+    $quickLift = new QuickLift_CH_Manager();
+
+    if ($quickLift->connected == true) {
+        $existing_uuid = get_post_meta($post_ID, 'lift_uuid', true);
+
+        /*var_dump($existing_uuid);
+        die();*/
+
+        if ($existing_uuid != '') {
+          $quickLift->quickLiftDeleteEntity($existing_uuid);
+        }
     }
 
     $this->exportWidget($quickLift);
@@ -273,13 +296,23 @@ class QuickLift_Admin {
     $quickLift = new QuickLift_CH_Manager();
 
     if($quickLift->connected == true) {
+      //@todo SANITIZE THIS
+      if (isset($_GET['d'])) {
+          $quickLift->quickLiftDeleteEntity($_GET['d']);
+      }
       $clients = $quickLift->quickLiftListClients();
+      echo "<h3>Clients Registered for this Account</h3>";
+      echo "<div style='background-color:white;padding: 10px;border:1px solid #999999;height:300px;overflow-y:scroll;'>";
       foreach ($clients as $client) {
         print_r($client);
         echo "<br /><br />";
       }
+      echo "</div>";
+      echo "<h3>Entities Tracked</h3>";
+      echo "<div style='background-color:white;padding: 10px;border:1px solid #999999;height:300px;overflow-y:scroll;'>";
       $entities = $quickLift->quickLiftListEntities();
       echo "$entities";
+      echo "</div>";
     } else {
       echo "Please connect to Lift to continue!";
     }

@@ -166,6 +166,7 @@ class QuickLift {
     $this->loader->add_action( 'init', $plugin_admin, 'quicklift_content_init' );
     $this->loader->add_action( 'publish_personalization', $plugin_admin, 'quicklift_post_publish',10,2 );
     $this->loader->add_action( 'publish_post', $plugin_admin, 'quicklift_post_publish',10,2 );
+    $this->loader->add_action( 'wp_trash_post', $plugin_admin, 'quicklift_post_delete',10,2 );
 
 	}
 

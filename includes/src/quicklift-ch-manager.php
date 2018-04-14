@@ -66,14 +66,32 @@ class QuickLift_CH_Manager
       $entities = $this->quickLiftGetEntities();
       $rendered_list = '';
       if (!empty($entities)) {
-        $mask = "%-36.36s | %-20.20s | %-36.36s | %-25.25s<br />";
+        /*$mask = "%-36.36s | %-20.20s | %-36.36s | %-25.25s | %-25.25s<br />";
         $rendered_list = "Entities <br />";
-        $rendered_list .= sprintf($mask, 'Content UUID', 'Type', 'Origin UUID', 'Modified');
-        $rendered_list .= sprintf($mask, str_repeat('-', 36), str_repeat('-', 20), str_repeat('-', 36), str_repeat('-', 25));
+        $rendered_list .= sprintf($mask, 'Content UUID', 'Type', 'Origin UUID', 'Modified', 'Action');
+        $rendered_list .= sprintf($mask, str_repeat('-', 36), str_repeat('-', 20), str_repeat('-', 36), str_repeat('-', 25), str_repeat('-', 25));
 
         foreach ($entities as $entity) {
-          $rendered_list .= sprintf($mask, $entity['uuid'], $entity['type'], $entity['origin'], $entity['modified']);
+          $rendered_list .= sprintf($mask, $entity['uuid'], $entity['type'], $entity['origin'], $entity['modified'], "/wp-admin/options-general.php?page=quicklift-status.php?d=".$entity['uuid']);
+        }*/
+
+
+        $rendered_list = "<table>";
+        $rendered_list .= "<tr><th>Content UUID</th><th>Type</th><th>Status</th><th>Origin UUID</th><th>Modified</th><th>Action</th></tr>";
+
+        global $wpdb;
+        foreach ($entities as $entity) {
+          $status = 'disconnected';
+          $results = $wpdb->get_results( "select A.post_id, A.meta_key, B.post_title from wp_postmeta A JOIN wp_posts B on A.post_id=B.ID where A.meta_value = '".$entity['uuid']."'", ARRAY_A );
+          if (!empty($results)) {
+            $status = "<a href='".get_edit_post_link($results[0]['post_id'])."'>".$results[0]['post_title']."</a>";
+          }
+          if ($entity['type'] == 'widget') {
+            $status = 'not tracked';
+          }
+          $rendered_list .= "<tr><td>".$entity['uuid']."</td><td>".$entity['type']."</td><td>".$status."</td><td>".$entity['origin']."</td><td>".$entity['modified']."</td><td>"."<a href='/wp-admin/options-general.php?page=quicklift-status.php&d=".$entity['uuid']."'>Delete</a></td></tr>";
         }
+        $rendered_list .= "</table>";
       } else {
         $rendered_list = "No entities found.\n";
       }

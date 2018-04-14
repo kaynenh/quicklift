@@ -120,22 +120,44 @@ class QuickLift_Admin {
   public function quicklift_post_publish($post_ID, $post) {
 
     $quickLift = new QuickLift_CH_Manager();
-    if($quickLift->connected == true) {
-      var_dump('not empty');
-      //if (isset($post)) die(print_r($post));
 
-      //Remove existing entity
-      $existing_uuid = get_post_meta($post_ID, 'lift_uuid', true);
-      $preview_image = get_the_post_thumbnail_url($post_ID, 'thumbnail');
+    if ($post->post_type != 'post') {
+      if ($quickLift->connected == true) {
+        $existing_uuid = get_post_meta($post_ID, 'lift_uuid', true);
+        $preview_image = get_the_post_thumbnail_url($post_ID, 'thumbnail');
+        $preview_image = ($preview_image ? $preview_image : "undefined");
 
-      $created = new DateTime($post->post_date_gmt);
-      $modified = new DateTime($post->post_modified_gmt);
-      $entities = $quickLift->quickLiftCreateEntities($existing_uuid, $post_ID, 'wp_blog', $post->post_title, $created->format(DateTime::ATOM), $modified->format(DateTime::ATOM), $preview_image, $post->post_content);
+        $created = new DateTime($post->post_date_gmt);
+        $modified = new DateTime($post->post_modified_gmt);
+        $entity = $quickLift->quickLiftCreateEntity($existing_uuid, $post_ID, 'wp_blog', $post->post_title, $created->format(DateTime::ATOM), $modified->format(DateTime::ATOM), $preview_image, $post->post_content);
 
-      if ($existing_uuid != '') {
-        $quickLift->quickLiftUpdateEntities($entities);
+        if ($existing_uuid != '') {
+          $quickLift->quickLiftUpdateEntities($quickLift->entities);
+        } else {
+          $quickLift->quickLiftSaveEntities($quickLift->entities);
+        }
+      }
+    }
+
+    $this->exportWidget($quickLift);
+  }
+
+  public function exportWidget($quickLift, $widget_name = 'WP_Widget_Recent_Posts') {
+    //Recent Posts Widget
+    if ($syndicateRecentPostsWidget = true) {
+      ob_start();
+      the_widget( $widget_name );
+      $widget_html = ob_get_clean();
+      //$widget_html = 'Recent Posts';
+      $widget_stored_uuid = get_option('recent_posts_uuid', '');
+      $widget = $quickLift->quickLiftCreateEntity($widget_stored_uuid, 100, 'widget', "Recent Posts", '', '', '', $widget_html);
+      $widget_uuid = $widget->getUuid();
+      add_option('recent_posts_uuid', $widget_uuid, '', 'yes');
+
+      if ($widget_stored_uuid != '') {
+        $quickLift->quickLiftUpdateEntities($quickLift->entities);
       } else {
-        $quickLift->quickLiftSaveEntities($entities);
+        $quickLift->quickLiftSaveEntities($quickLift->entities);
       }
     }
   }

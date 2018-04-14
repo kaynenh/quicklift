@@ -22,6 +22,7 @@ class QuickLift_CH_Manager
   public $client_name = '';
   public $client_id = '';
   public $connected = false;
+  public $entities;
 
   public function __construct()
   {
@@ -34,6 +35,8 @@ class QuickLift_CH_Manager
 
     if ($this->loadConfig()) {
       $this->connected = true;
+
+      $this->entities = new Entities();
       return true;
     }
     return false;
@@ -140,7 +143,7 @@ class QuickLift_CH_Manager
    */
   function quickLiftRunCreateEntities() {
     // Process CSV.
-    $entities = $this->quickLiftCreateEntities();
+    $entities = $this->quickLiftCreateEntity();
 
       // Save to Acquia Content Hub.
     $result = $this->quickLiftSaveEntities($entities);
@@ -157,12 +160,9 @@ class QuickLift_CH_Manager
    * CreateEntities
    *
    * @param $config
-   * @return Entities
+   * @return Entity
    */
-  function quickLiftCreateEntities($uuid = '', $id = 1,$type = 'undefined', $title = 'No title', $created = '', $modified = '', $preview_image = '', $html = 'No Content') {
-    // Create entity container
-    $entities = new Entities();
-
+  function quickLiftCreateEntity($uuid = '', $id = 1,$type = 'undefined', $title = 'No title', $created = '', $modified = '', $preview_image = '', $html = 'No Content') {
     // Get default date.
     if ($created == '') {
       $created = date('c');
@@ -170,6 +170,10 @@ class QuickLift_CH_Manager
 
     if ($modified == '') {
       $modified = date( 'c');
+    }
+
+    if ($type == 'widget') {
+
     }
 
     // Set entity
@@ -183,9 +187,10 @@ class QuickLift_CH_Manager
     $entity['view_modes']['default'] = $html;
 
     // Build entity.
-    $entities->addEntity($this->quickLiftBuildEntity($entity));
+    $created_entity = $this->quickLiftBuildEntity($entity);
+    $this->entities->addEntity($created_entity);
 
-    return $entities;
+    return $created_entity;
   }
 
 

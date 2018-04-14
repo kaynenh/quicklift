@@ -165,8 +165,7 @@ class QuickLift {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'quicklift_admin' );
     $this->loader->add_action( 'init', $plugin_admin, 'quicklift_content_init' );
     $this->loader->add_action( 'publish_personalization', $plugin_admin, 'quicklift_post_publish',10,2 );
-
-    //$this->loader->add_action( 'publish_post', $plugin_admin, 'quicklift_post_publish',10,2 );
+    $this->loader->add_action( 'publish_post', $plugin_admin, 'quicklift_post_publish',10,2 );
 
 	}
 
